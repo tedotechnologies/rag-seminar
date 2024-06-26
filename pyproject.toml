@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "seminar-rag"
+version = "0.1.0"
+description = ""
+authors = ["dmerkulov001 <dmitriy.merkulov@tedo.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.111.0"
+weaviate-client = "^4.6.5"
+langchain-openai = "^0.1.9"
+langchain-community = "^0.2.5"
+streamlit = "^1.36.0"
+docx2txt = "^0.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
