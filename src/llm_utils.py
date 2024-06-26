@@ -13,16 +13,12 @@ def get_messages(
 ) -> list[dict[str, str]]:
     history = []
     if context and system_prompt:
-        system_message = {
-            "role": "system",
-            "content": system_prompt + '\n' + context
-        }
+        # create a system message and add context to it
+        system_message = """YOUR CODE HERE"""
         history.append(system_message)
     if question:
-        user_message = {
-            "role": "user",
-            "content": question
-        }
+        # create a user message with the question
+        user_message = """YOUR CODE HERE"""
         history.append(user_message)
     LOGGER.debug(f"Got history: {history}")
     return history

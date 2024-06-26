@@ -20,27 +20,31 @@ LOGGER = get_logger()
 async def answer(
         request: Request,
 ):
+    """
+    Answer the question. Requires a JSON with a 'query' field.
+    """
     data = await request.json()
-    query = data.get('query')
-    context_fragments = db.similarity_search(
-        query=query,
-        k=TOP_K_DOCUMENTS
-    )
+    # get the query from the request
+    query = """YOUR CODE HERE"""
+    LOGGER.info(f"Got query: {query}")
+    # get similar context from db
+    context_fragments = """YOUR CODE HERE"""
+
     context = ''
     for fragment in context_fragments:
-        fragment = fragment.page_content
-        context += f"{fragment}\n\n"
+        # get the text content from the fragment
+        fragment = """YOUR CODE HERE"""
+        # add the fragment to the context
+        context += """YOUR CODE HERE"""
     LOGGER.debug(f"Got context: {context}")
-    messages = get_messages(
-        question=query,
-        context=context
-    )
-    answer = await call_model(
-        messages=messages,
-        url_out=MODEL_URL,
-        max_new_tokens=MAX_NEW_TOKENS,
-        temperature=TEMPERATURE
-    )
+
+    # complete the code for the get_messages function in llm_utils.py
+    # and add all the necessary arguments
+    messages = get_messages()
+
+    # add all the necessary arguments to the call_model function in llm_utils.py
+    answer = await call_model()
+
     return {"answer": answer}
 
 
@@ -54,14 +58,16 @@ async def load_document(
     for file in files:
         with open(file.filename, "wb") as buffer:
             buffer.write(file.file.read())
-        loader = Docx2txtLoader(str(file.filename))
-        document = loader.load()
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=0
-        )
-        texts = text_splitter.spit_text(document[0].page_content)
-        db.add_texts(texts=texts)
+        # initialize docx fileloader
+        loader = """YOUR CODE HERE"""
+        # load document
+        document = """YOUR CODE HERE"""
+        # initialize text splitter
+        text_splitter = """YOUR CODE HERE"""
+        # split text
+        texts = """YOUR CODE HERE"""
+        # add texts to db
+        """YOUR CODE HERE"""
         LOGGER.info(f"Added document {file.filename} to DB")
     return {"answer": "Success!"}
 
@@ -74,8 +80,9 @@ if __name__ == "__main__":
     embeddings = OpenAIEmbeddings(
         model=EMBEDDINGS_MODEL_NAME
     )
-    db = init_db(
-        client,
-        embeddings
-    )
+
+    # complete the code for the init_db function in init_db.py
+    # and add all the necessary arguments
+    db = init_db()
+
     uvicorn.run(app, host="0.0.0.0", port=API_PORT, log_level="info")
