@@ -1,19 +1,50 @@
 [tool.poetry]
-name = "seminar-rag"
+name = "mafia_qa"
 version = "0.1.0"
 description = ""
-authors = ["dmerkulov001 <dmitriy.merkulov@tedo.ru>"]
+authors = ["Olga Lipina <neon_alfa@mail.ru>"]
 readme = "README.md"
+packages = [{include = "mafia_qa"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-fastapi = "^0.111.0"
+python = ">=3.10,<3.12"
+fastapi = "^0.109.2"
+uvicorn = "^0.27.1"
+python-multipart = "^0.0.9"
+streamlit = "^1.32.2"
+accelerate = "^0.28.0"
+streamlit-authenticator = "^0.3.2"
 weaviate-client = "^4.6.5"
-langchain-openai = "^0.1.9"
-langchain-community = "^0.2.5"
-streamlit = "^1.36.0"
+langchain = "0.1.7"
+langchain-openai = "0.0.6"
 docx2txt = "^0.8"
 
+[tool.poetry.group.call_qa]
+optional = true
+
+[tool.poetry.group.call_qa.dependencies]
+weaviate-client = "^4.4.4"
+chromadb = "^0.4.22"
+docx2txt = "^0.8"
+sentence-transformers = "^2.3.1"
+faiss-cpu = "^1.7.4"
+langchain-community = "^0.0.20"
+tiktoken = "^0.6.0"
+langchainhub = "^0.1.14"
+python-docx = "^1.1.0"
+
+
+[tool.poetry.group.model]
+optional = true
+
+[tool.poetry.group.model.dependencies]
+transformers = "^4.37.2"
+torch = "^2.2.0"
+
+
+
+[tool.poetry.group.dev.dependencies]
+jupyterlab = "^4.1.1"
 
 [build-system]
 requires = ["poetry-core"]
