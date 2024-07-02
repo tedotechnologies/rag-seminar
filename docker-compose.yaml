@@ -1,0 +1,41 @@
+version: '3'
+services:
+  weaviate:
+    container_name: weaviate_seminar
+    image: semitechnologies/weaviate:1.19.6
+    ports:
+      - "8082:8080"
+    environment:
+      QUERY_DEFAULTS_LIMIT: 40
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'false'
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      ENABLE_MODULES: 'backup-filesystem'
+      CLUSTER_HOSTNAME: 'database_vec'
+      DEFAULT_VECTORIZER_MODULE: 'none'
+      AUTHENTICATION_APIKEY_ENABLED: 'true'
+      BACKUP_FILESYSTEM_PATH: '/tmp/backups'
+    env_file:
+      - .env.example
+    volumes:
+      - ./weaviate_main/backups:/tmp/backups
+      - ./weaviate_main/data:/var/lib/weaviate
+
+  frontend:
+    container_name: frontend_seminar
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    ports:
+      - "8501:8501"
+
+  backend:
+    container_name: backend_seminar
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.example
+    ports:
+      - "5005:5000"
+    depends_on:
+      - weaviate
